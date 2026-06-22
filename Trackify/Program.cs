@@ -1,7 +1,13 @@
+using Trackify.Interfaces;
+using Trackify.Repositories;
+using Trackify.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
 
 var app = builder.Build();
 
