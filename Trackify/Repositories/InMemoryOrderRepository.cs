@@ -12,4 +12,8 @@ public class InMemoryOrderRepository : IOrderRepository
     public Order? GetById(Guid id) => _orders.FirstOrDefault(x => x.Id == id);
 
     public IEnumerable<Order> GetAll() => _orders;
+    public void Update(Order order)
+    {
+        
+    }
 }

@@ -33,4 +33,44 @@ public class OrdersController : Controller
         
         return Ok(order);
     }
+
+    [HttpPatch("/{id}/assign-courier")]
+    public IActionResult AssignCourier(Guid id, AssingCourierRequest request)
+    {
+        _orderService.AssignCourier(id, request.CourierId);
+        
+        return NoContent();
+    }
+
+    [HttpPatch("/{id/start-preparing}")]
+    public IActionResult StartPreparing(Guid id)
+    {
+        _orderService.StartPreparing(id);
+        
+        return NoContent();
+    }
+
+    [HttpPatch("/{id}/ready")]
+    public IActionResult ReadyForDelivery(Guid id)
+    {
+        _orderService.MarkAsReadyForDelivery(id);
+
+        return NoContent();
+    }
+
+    [HttpPatch("/{id}/start-delivery")]
+    public IActionResult StartDelivery(Guid id)
+    {
+        _orderService.StartDelivery(id);
+        
+        return NoContent();
+    }
+
+    [HttpPatch("/{id}/complete-delivery")]
+    public IActionResult CompleteDelivery(Guid id)
+    {
+        _orderService.CompleteDelivery(id);
+
+        return NoContent();
+    }
 }

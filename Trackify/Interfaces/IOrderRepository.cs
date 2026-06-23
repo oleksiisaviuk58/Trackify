@@ -9,4 +9,6 @@ public interface IOrderRepository
     Order? GetById(Guid id);
 
     IEnumerable<Order> GetAll();
+
+    void Update(Order order);
 }
