@@ -6,8 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
+
+builder.Services.AddScoped<CourierService>();
+builder.Services.AddSingleton<ICourierRepository, InMemoryCourierRepository>();
 
 var app = builder.Build();
 
