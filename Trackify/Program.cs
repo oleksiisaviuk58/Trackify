@@ -13,6 +13,9 @@ builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
 builder.Services.AddScoped<CourierService>();
 builder.Services.AddSingleton<ICourierRepository, InMemoryCourierRepository>();
 
+builder.Services.AddScoped<LocationService>();
+builder.Services.AddSingleton<ILocationRepository, InMemoryLocationRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
