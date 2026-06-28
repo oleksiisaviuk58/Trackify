@@ -11,7 +11,8 @@ public class Order
     public OrderStatus Status { get; private set; }
     public decimal TotalPrice { get; private set; }
     public DateTime CreatedAt { get; set; }
-    public List<OrderItem> Items { get; set; } = [];
+    public List<OrderItem> _items { get; set; } = [];
+    public IReadOnlyCollection<OrderItem> Items => _items;
 
     public Order(Guid customerId)
     {
@@ -24,14 +25,14 @@ public class Order
     public void AddItem(MenuItem menuItem, int quantity)
     {
         var orderItem = new OrderItem(menuItem.Id, menuItem.Name, menuItem.Price, quantity);
-        Items.Add(orderItem);
+        _items.Add(orderItem);
 
         RecalculateTotal();
     }
 
     private void RecalculateTotal()
     {
-        TotalPrice = Items.Sum(x => x.UnitPrice * x.Quantity);
+        TotalPrice = _items.Sum(x => x.TotalPrice);
     }
 
     public void AssignCourier(Guid courierId)

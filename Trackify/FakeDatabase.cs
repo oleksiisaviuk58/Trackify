@@ -8,6 +8,7 @@ public static class FakeDatabase
     public static List<User> Users { get; } = [];
     public static List<Courier> Couriers { get; set; }
     public static List<Order> Orders { get; } = [];
+    public static List<MenuItem> MenuItems { get; } = [];
     public static List<CourierLocation> Locations { get; } = [];
 
     static FakeDatabase() => Seed();
@@ -33,5 +34,10 @@ public static class FakeDatabase
 
         Orders.Add(new Order(customer1.Id));
         Orders.Add(new Order(customer2.Id));
+        
+        MenuItems.Add(new MenuItem("Pepperoni", 250));
+        MenuItems.Add(new MenuItem("Margherita", 230));
+        MenuItems.Add(new MenuItem("Cola", 60));
+        MenuItems.Add(new MenuItem("Fries", 120));
     }
 }
