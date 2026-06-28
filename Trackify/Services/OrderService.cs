@@ -24,12 +24,12 @@ public class OrderService
     public void AssignCourier(Guid orderId, Guid courierId)
     {
         var order = _repository.GetById(orderId);
-
+    
         if (order is null)
             throw new Exception($"Order with id {orderId} not found");
-
+    
         order.AssignCourier(courierId);
-
+    
         _repository.Update(order);
     }
 

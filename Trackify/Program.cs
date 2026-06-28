@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSignalR();
 
+builder.Services.AddScoped<DeliveryService>();
+
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
 
@@ -43,6 +45,5 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();
