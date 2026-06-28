@@ -20,7 +20,7 @@ public class LocationsController : Controller
     }
 
     [HttpPatch("{courierId}")]
-    public IActionResult UpdateLocation(Guid courierId, UpdateLocationRequest request)
+    public async Task<IActionResult> UpdateLocation(Guid courierId, UpdateLocationRequest request)
     {
         _service.UpdateLocation(courierId, request.Latitude, request.Longitude);
 
