@@ -1,3 +1,6 @@
+using System.Collections.Specialized;
+using Trackify.Models;
+
 namespace Tackify.Models;
 
 public class Order
@@ -8,6 +11,7 @@ public class Order
     public OrderStatus Status { get; private set; }
     public decimal TotalPrice { get; private set; }
     public DateTime CreatedAt { get; set; }
+    public List<OrderItem> Items { get; set; } = [];
 
     public Order(Guid customerId)
     {
@@ -15,6 +19,19 @@ public class Order
         CustomerId = customerId;
         Status = OrderStatus.Created;
         CreatedAt = DateTime.UtcNow;
+    }
+
+    public void AddItem(MenuItem menuItem, int quantity)
+    {
+        var orderItem = new OrderItem(menuItem.Id, menuItem.Name, menuItem.Price, quantity);
+        Items.Add(orderItem);
+
+        RecalculateTotal();
+    }
+
+    private void RecalculateTotal()
+    {
+        TotalPrice = Items.Sum(x => x.UnitPrice * x.Quantity);
     }
 
     public void AssignCourier(Guid courierId)

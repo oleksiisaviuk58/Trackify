@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Trackify.API;
+using Trackify.Contract;
 using Trackify.Services;
 
 namespace Trackify.Controllers;
@@ -35,7 +36,7 @@ public class OrdersController : Controller
     }
 
     [HttpPatch("/{id}/assign-courier")]
-    public IActionResult AssignCourier(Guid id, AssingCourierRequest request)
+    public IActionResult AssignCourier(Guid id, AssignCourierRequest request)
     {
         _orderService.AssignCourier(id, request.CourierId);
         
