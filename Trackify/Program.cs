@@ -1,3 +1,5 @@
+using Trackify;
+using Trackify.API;
 using Trackify.Hubs;
 using Trackify.Interfaces;
 using Trackify.Repositories;
@@ -11,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 builder.Services.AddScoped<DeliveryService>();
+
+builder.Services.AddScoped<ILocationNotifier, SignalLocationNotifier>();
 
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();

@@ -10,22 +10,17 @@ namespace Trackify.Controllers;
 [Route("api/[controller]")]
 public class LocationsController : Controller
 {
-    private readonly LocationService _service;
-    private readonly IHubContext<CourierHub> _hubContext;
+    private readonly LocationService _locationService;
 
-    public LocationsController(LocationService service, IHubContext<CourierHub> hubContext)
+    public LocationsController(LocationService locationService, IHubContext<CourierHub> hubContext)
     {
-        _service = service;
-        _hubContext = hubContext;
+        _locationService = locationService;
     }
 
     [HttpPatch("{courierId}")]
     public async Task<IActionResult> UpdateLocation(Guid courierId, UpdateLocationRequest request)
     {
-        _service.UpdateLocation(courierId, request.Latitude, request.Longitude);
-
-        await _hubContext.Clients.All.SendAsync("LocationUpdated", 
-            courierId, request.Latitude, request.Longitude);
+        await _locationService.UpdateLocation(courierId, request.Latitude, request.Longitude);
 
         return NoContent();
     }
@@ -33,7 +28,7 @@ public class LocationsController : Controller
     [HttpGet("{courierId}")]
     public IActionResult GetLocation(Guid courierId)
     {
-        var location = _service.GetLocation(courierId);
+        var location = _locationService.GetLocation(courierId);
 
         if (location is null)
             return NotFound();
