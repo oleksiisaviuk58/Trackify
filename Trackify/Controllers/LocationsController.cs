@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Trackify.API;
+using Trackify.Hubs;
 using Trackify.Services;
 
 namespace Trackify.Controllers;
@@ -9,13 +11,21 @@ namespace Trackify.Controllers;
 public class LocationsController : Controller
 {
     private readonly LocationService _service;
+    private readonly IHubContext<CourierHub> _hubContext;
 
-    public LocationsController(LocationService service) => _service = service;
+    public LocationsController(LocationService service, IHubContext<CourierHub> hubContext)
+    {
+        _service = service;
+        _hubContext = hubContext;
+    }
 
     [HttpPatch("{courierId}")]
     public IActionResult UpdateLocation(Guid courierId, UpdateLocationRequest request)
     {
         _service.UpdateLocation(courierId, request.Latitude, request.Longitude);
+
+        await _hubContext.Clients.All.SendAsync("LocationUpdated", 
+            courierId, request.Latitude, request.Longitude);
 
         return NoContent();
     }

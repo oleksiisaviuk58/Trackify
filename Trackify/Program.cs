@@ -1,3 +1,4 @@
+using Trackify.Hubs;
 using Trackify.Interfaces;
 using Trackify.Repositories;
 using Trackify.Services;
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
@@ -32,6 +35,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllers();
+app.MapHub<CourierHub>("/courierHub");
 
 app.MapControllerRoute(
         name: "default",
